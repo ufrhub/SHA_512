@@ -1,4 +1,4 @@
-// C++ program for the above approach
+/** Secure Hashing Algorithm Using C++ **/
 #include <iostream>
 #include <bitset>
 #include <sstream>
@@ -119,7 +119,6 @@ std::string decimaltohex(int64 deci)
 // string to decimal value
 int64 BintoDec(std::string bin)
 {
-
     int64 value = std::bitset<64>(bin)
                       .to_ullong();
     return value;
@@ -145,11 +144,8 @@ void separator(std::string getBlock)
     int chunknum = 0;
 
     // Traverse the string S
-    for (unsigned int i = 0;
-         i < getBlock.length();
-         i += 64, ++chunknum)
+    for (unsigned int i = 0; i < getBlock.length(); i += 64, ++chunknum)
     {
-
         // Update the Message[chunknum]
         Message[chunknum] = BintoDec(getBlock.substr(i, 64));
     }
@@ -157,7 +153,6 @@ void separator(std::string getBlock)
     // Iterate over the range [16, 80]
     for (int g = 16; g < 80; ++g)
     {
-
         // Find the WordA
         int64 WordA = rotate_right(Message[g - 2], 19) ^ rotate_right(Message[g - 2], 61) ^ shift_right(Message[g - 2], 6);
 
@@ -203,7 +198,6 @@ int64 sigmaE(int64 e)
 // the right rotate over 28, 34, and 39
 int64 sigmaA(int64 a)
 {
-
     // Return the resultant value
     return rotate_right(a, 28) ^ rotate_right(a, 34) ^ rotate_right(a, 39);
 }
@@ -240,10 +234,8 @@ std::string SHA512(std::string myString)
     std::stringstream fixedstream;
 
     // Traverse the string S
-    for (int i = 0;
-         i < myString.size(); ++i)
+    for (std::string::size_type i = 0; i < myString.size(); ++i)
     {
-
         // Add the character to stream
         fixedstream << std::bitset<8>(myString[i]);
     }
@@ -304,18 +296,14 @@ std::string SHA512(std::string myString)
     std::vector<std::string> Blocks(blocksnumber);
 
     // Traverse the string s1024
-    for (int i = 0; i < s1024.length();
-         i += 1024, ++chunknum)
+    for (std::string::size_type i = 0; i < s1024.length(); i += 1024, ++chunknum)
     {
         Blocks[chunknum] = s1024.substr(i, 1024);
     }
 
     // Traverse the array Blocks[]
-    for (int letsgo = 0;
-         letsgo < blocksnumber;
-         ++letsgo)
+    for (int letsgo = 0; letsgo < blocksnumber; ++letsgo)
     {
-
         // Divide the current string
         // into 80 blocks size 16 each
         separator(Blocks[letsgo]);
@@ -334,9 +322,7 @@ std::string SHA512(std::string myString)
         // Find hash values
         for (int i = 0; i < 10; i++)
         {
-
             // Find the Hash Values
-
             Func(A, B, C, D, E, F, G, H, count);
             count++;
             Func(H, A, B, C, D, E, F, G, count);
@@ -392,8 +378,7 @@ int main()
     std::string S = "Passwords Hashing Algorithm Using ( SHA-512 )";
 
     // Function Call
-    std::cout << S << ": \n"
-              << SHA512(S);
+    std::cout << S << ": \n" << SHA512(S) << std::endl;
 
     return 0;
 }
